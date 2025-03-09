@@ -1,6 +1,7 @@
 # ExampleApi
 
-- .NET v8 (with [Homebrew](https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/d/dotnet@8.rb))
+- .NET v8 (with [Homebrew - dotnet@8](https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/d/dotnet@8.rb))
+  - [.NET v8 is LTS](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core)
 
 # Self-signed certificate
 
