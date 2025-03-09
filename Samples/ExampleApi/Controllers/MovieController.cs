@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ExampleApi.Controllers
 {
     [ApiController]    
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class MovieController : ControllerBase
     {
         [HttpGet]        
