@@ -7,10 +7,9 @@
 
 import Foundation
 import GRDB
+import RealmSwift
 
-final class UserRepositoryImpl<Provider: DataStoreProvider>: UserRepository
-where Provider.StoreType == DatabaseQueue {
-
+final class UserRepositoryImpl<Provider: DataStoreProvider>: UserRepository {
     private let provider: Provider
 
     init(provider: Provider) {
@@ -18,17 +17,30 @@ where Provider.StoreType == DatabaseQueue {
     }
 
     func fetchUser(by id: String) -> User? {
-        let dbQueue = provider.provide()
-        return try? dbQueue.read { db in
-            try UserGRDBRow.fetchOne(db, key: id)?.toDomain()
+        let store = provider.provide()
+        if let dbQueue = store as? DatabaseQueue {
+            return try? dbQueue.read { db in
+                try UserGRDBRow.fetchOne(db, key: id)?.toDomain()
+            }
+        } else if let realm = store as? Realm {
+            return realm.object(ofType: UserRealmObject.self, forPrimaryKey: id)?.toDomain()
+        } else {
+            return nil
         }
     }
 
     func saveUser(_ user: User) {
-        let dbQueue = provider.provide()
-        let row = UserGRDBRow(from: user)
-        try? dbQueue.write { db in
-            try row.save(db)
+        let store = provider.provide()
+        if let dbQueue = store as? DatabaseQueue {
+            let row = UserGRDBRow(from: user)
+            try? dbQueue.write { db in
+                try row.save(db)
+            }
+        } else if let realm = store as? Realm {
+            let object = UserRealmObject(from: user)
+            try? realm.write {
+                realm.add(object, update: .modified)
+            }
         }
     }
 }
