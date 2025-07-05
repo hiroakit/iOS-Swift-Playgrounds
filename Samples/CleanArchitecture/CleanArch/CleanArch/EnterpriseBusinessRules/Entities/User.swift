@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User {
+struct User: Identifiable, Hashable {
     let id: String
     let name: String
     let age: Int
