@@ -9,3 +9,8 @@ protocol DataStoreProvider {
     associatedtype StoreType
     func provide() -> StoreType
 }
+
+enum DatabaseType: String {
+    case realm
+    case sqlite
+}
