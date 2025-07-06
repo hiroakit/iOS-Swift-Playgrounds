@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		CB615D3B2E18BB4C005660F0 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = CB615D3A2E18BB4C005660F0 /* GRDB */; };
 		CBCF4F342E19016400D8C209 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CBCF4F332E19016400D8C209 /* RealmSwift */; };
+		CBCF4F442E1A0D1F00D8C209 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CBCF4F432E1A0D1F00D8C209 /* RealmSwift */; };
+		CBCF4F472E1A0DEB00D8C209 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = CBCF4F432E1A0D1F00D8C209 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +29,20 @@
 			remoteInfo = CleanArch;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CBCF4F462E1A0D1F00D8C209 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CBCF4F472E1A0DEB00D8C209 /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		CB615D0F2E18B4BE005660F0 /* CleanArch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanArch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBCF4F442E1A0D1F00D8C209 /* RealmSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +102,7 @@
 				CB615D112E18B4BE005660F0 /* CleanArch */,
 				CB615D1F2E18B4BF005660F0 /* CleanArchTests */,
 				CB615D292E18B4BF005660F0 /* CleanArchUITests */,
+				CBCF4F422E1A0D1F00D8C209 /* Frameworks */,
 				CB615D102E18B4BE005660F0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -97,6 +115,13 @@
 				CB615D262E18B4BF005660F0 /* CleanArchUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CBCF4F422E1A0D1F00D8C209 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,6 +158,7 @@
 				CB615D182E18B4BF005660F0 /* Sources */,
 				CB615D192E18B4BF005660F0 /* Frameworks */,
 				CB615D1A2E18B4BF005660F0 /* Resources */,
+				CBCF4F462E1A0D1F00D8C209 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -144,6 +170,7 @@
 			);
 			name = CleanArchTests;
 			packageProductDependencies = (
+				CBCF4F432E1A0D1F00D8C209 /* RealmSwift */,
 			);
 			productName = CleanArchTests;
 			productReference = CB615D1C2E18B4BF005660F0 /* CleanArchTests.xctest */;
@@ -626,6 +653,11 @@
 			productName = GRDB;
 		};
 		CBCF4F332E19016400D8C209 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBCF4F322E19016400D8C209 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		CBCF4F432E1A0D1F00D8C209 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CBCF4F322E19016400D8C209 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;

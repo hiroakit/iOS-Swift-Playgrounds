@@ -5,12 +5,12 @@
 //  Created by hiroakit on 2025/07/05.
 //
 
-
 import Testing
 import GRDB
+import RealmSwift
 @testable import CleanArch
 
-struct UserRepositoryTests {
+struct UserRepositorySQLiteTests {
     let dbQueue: DatabaseQueue
     let repository: UserRepository
 
@@ -56,6 +56,54 @@ struct UserRepositoryTests {
 
         let fetched = repository.fetchUser(by: "abc123")
 
+        #expect(fetched != nil)
+        #expect(fetched?.id == expected.id)
+        #expect(fetched?.name == expected.name)
+        #expect(fetched?.age == expected.age)
+    }
+}
+
+struct UserRepositoryRealmTests {
+    let realm: Realm
+    let repository: UserRepository
+
+    init() {
+        var config = Realm.Configuration(inMemoryIdentifier: "UserRepositoryRealmTests")
+        config.deleteRealmIfMigrationNeeded = true
+        self.realm = try! Realm(configuration: config)
+        let provider = MockRealmProvider(realm: realm)
+        self.repository = UserRepositoryImpl(provider: provider)
+    }
+
+    @Test("saveUser stores user correctly in Realm")
+    func testSaveUser() throws {
+        // Arrange
+        let expected = User(id: "def456", name: "Hanako", age: 30)
+
+        // Act
+        repository.saveUser(expected)
+
+        // Assert
+        let fetchedObject = realm.object(ofType: UserRealmObject.self, forPrimaryKey: expected.id)
+        #expect(fetchedObject != nil)
+        #expect(fetchedObject?.id == expected.id)
+        #expect(fetchedObject?.name == expected.name)
+        #expect(fetchedObject?.age == expected.age)
+    }
+
+    @Test("fetchUser returns the expected User from Realm")
+    func testFetchUser() throws {
+        // Arrange
+        let expected = User(id: "abc123", name: "Taro", age: 25)
+        let realmObject = UserRealmObject(from: expected)
+        try! realm.write {
+            realm.add(realmObject)
+        }
+
+        // Act
+        let fetched = repository.fetchUser(by: expected.id)
+
+        // Assert
         #expect(fetched != nil)
         #expect(fetched?.id == expected.id)
         #expect(fetched?.name == expected.name)

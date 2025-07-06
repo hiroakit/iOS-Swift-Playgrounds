@@ -17,7 +17,7 @@ struct FetchUserUseCaseTests {
         let expectedUser = User(id: "xyz789", name: "Ichiro", age: 40)
         repository.saveUser(expectedUser)
 
-        let useCase = FetchUserUseCase(repository: repository)
+        let useCase = FetchUserUseCaseImpl(repository: repository)
 
         // Act
         let result = useCase.execute(id: "xyz789")
@@ -33,7 +33,7 @@ struct FetchUserUseCaseTests {
     func testExecuteReturnsNilWhenUserNotFound() {
         // Arrange
         let repository = MockUserRepository()
-        let useCase = FetchUserUseCase(repository: repository)
+        let useCase = FetchUserUseCaseImpl(repository: repository)
 
         // Act
         let result = useCase.execute(id: "unknown")

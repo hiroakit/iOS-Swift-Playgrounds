@@ -12,8 +12,10 @@ enum EncryptionKeyProvider {
     private static let keychainKey = "com.cleanarch.database.encryptionkey"
     private static let keyLength = 64
 
-    static func provideKey() throws -> Data {
-        if let existingKey = try? retrieveKeyFromKeychain() {
+    @MainActor static func provideKey(keyName: String? = nil) throws -> Data {
+        let account = keyName ?? keychainKey
+
+        if let existingKey = try? retrieveKeyFromKeychain(account) {
             return existingKey
         }
 
@@ -25,7 +27,7 @@ enum EncryptionKeyProvider {
             throw NSError(domain: "EncryptionKeyProvider", code: Int(result), userInfo: nil)
         }
 
-        try storeKeyInKeychain(keyData)
+        try storeKeyInKeychain(keyData, for: account)
         return keyData
     }
 
@@ -36,10 +38,10 @@ enum EncryptionKeyProvider {
         #endif
     }
 
-    private static func retrieveKeyFromKeychain() throws -> Data? {
+    private static func retrieveKeyFromKeychain(_ account: String) throws -> Data? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: keychainKey,
+            kSecAttrAccount as String: account,
             kSecReturnData as String: true,
             kSecMatchLimit as String: kSecMatchLimitOne
         ]
@@ -51,10 +53,10 @@ enum EncryptionKeyProvider {
         return item as? Data
     }
 
-    private static func storeKeyInKeychain(_ key: Data) throws {
+    private static func storeKeyInKeychain(_ key: Data, for account: String) throws {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: keychainKey,
+            kSecAttrAccount as String: account,
             kSecValueData as String: key
         ]
         SecItemDelete(query as CFDictionary)
