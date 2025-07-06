@@ -1,0 +1,84 @@
+# CleanArchitecture Project Rules
+
+## Project Overview
+This is a Clean Architecture implementation in iOS using Swift and SwiftUI. The project demonstrates proper separation of concerns and dependency inversion principles.
+
+## Architecture Layers
+- **Enterprise Business Rules**: Core entities and business rules
+- **Application Business Rules**: Use cases and application logic  
+- **Interface Adapters**: Data conversion and external interfaces
+- **Frameworks and Drivers**: UI, databases, and external frameworks
+
+## Development Guidelines
+
+### Code Organization
+- Follow Clean Architecture principles strictly
+- Keep dependencies pointing inward (toward Enterprise Business Rules)
+- Use dependency injection for external dependencies
+- Maintain clear separation between layers
+
+### Naming Conventions
+- Use descriptive names for all components
+- Follow Swift naming conventions
+- Prefix interfaces with "I" or use "Protocol" suffix
+- Use clear, domain-specific terminology
+
+### Testing
+- Write tests for all layers
+- Use dependency injection for testability
+- Mock external dependencies in tests
+- Test both success and failure scenarios
+
+## Commands
+
+### Build and Run
+```bash
+# Open project in Xcode
+open CleanArch.xcodeproj
+
+# Build project
+xcodebuild -project CleanArch.xcodeproj -scheme CleanArch -destination 'platform=iOS Simulator,name=iPhone 16'
+```
+
+### Testing
+```bash
+# Run all tests
+xcodebuild test -project CleanArch.xcodeproj -scheme CleanArch -destination 'platform=iOS Simulator,name=iPhone 16'
+
+# Run unit testing
+xcodebuild test -project CleanArch.xcodeproj -scheme CleanArch -destination 'platform=iOS Simulator,name=iPhone 16' -only-testing:CleanArchTests
+```
+
+### Database Operations
+- The project supports both SQLite (GRDB) and Realm databases
+- Use DatabaseProviderFactory to switch between database implementations
+- Ensure proper encryption key management for sensitive data
+
+### Code Generation
+- Follow Clean Architecture patterns when adding new features
+- Create corresponding tests for new functionality
+- Update documentation when adding new components
+
+## File Structure Guidelines
+- Keep entities in EnterpriseBusinessRules/Entities/
+- Place use cases in ApplicationBusinessRules/UseCases/
+- Store adapters in InterfaceAdapters/
+- Put UI and external frameworks in FrameworksAndDrivers/
+
+## Best Practices
+1. Always maintain dependency inversion
+2. Write tests before implementing features (TDD)
+3. Use dependency injection for external dependencies
+4. Keep business logic independent of frameworks
+5. Document complex business rules
+6. Follow SOLID principles
+
+## Common Patterns
+- Repository Pattern for data access
+- Factory Pattern for dependency creation
+- Use Case Pattern for business logic
+- Adapter Pattern for external integrations
+description:
+globs:
+alwaysApply: false
+---
