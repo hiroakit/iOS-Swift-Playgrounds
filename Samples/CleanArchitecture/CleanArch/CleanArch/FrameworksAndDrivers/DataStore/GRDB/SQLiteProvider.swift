@@ -13,8 +13,8 @@ final class SQLiteProvider: DataStoreProvider {
 
     private let dbQueue: DatabaseQueue
 
-    init(path: String) {
-        self.dbQueue = try! DatabaseQueue(path: path)
+    init(path: String, configuration: Configuration = Configuration()) {
+        self.dbQueue = try! DatabaseQueue(path: path, configuration: configuration)
     }
 
     func provide() -> DatabaseQueue {
